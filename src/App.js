@@ -37,6 +37,7 @@ class App extends Component {
       text: '',
       songsLoaded: false,
       data: null,
+      tracks: [],
     };
   }
 
@@ -52,7 +53,7 @@ class App extends Component {
         console.log("Réponse reçue ! Voilà ce que j'ai reçu : ", data);
         return setTimeout(
           function() {
-            this.setState({ songsLoaded: true, text: 'En avant la musique', data: data });
+            this.setState({ songsLoaded: true, text: 'En avant la musique', data: data, tracks: data.items.slice(0, 3).map(item => item.track) });
           }
           .bind(this),
           3000
@@ -82,6 +83,9 @@ class App extends Component {
           )}
         </div>
         <div className="App-buttons">
+          {this.state.tracks.map((track) => {
+            return (<Button>{track.name}</Button>);
+          })}
         </div>
       </div>
     );
