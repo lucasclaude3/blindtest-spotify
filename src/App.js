@@ -32,6 +32,13 @@ class App extends Component {
 
   constructor() {
     super();
+    this.state = {
+      text: '',
+    };
+  }
+
+  componentDidMount() {
+    this.setState({ text: 'En avant la musique' });
   }
 
   render() {
@@ -42,7 +49,7 @@ class App extends Component {
           <h1 className="App-title">Blind Test</h1>
         </header>
         <div className="App-images">
-          <p>En avant la musique</p>
+          <p>{this.state.text}</p>
         </div>
         <div className="App-buttons">
         </div>
