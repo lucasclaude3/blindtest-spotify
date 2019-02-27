@@ -34,6 +34,7 @@ class App extends Component {
     super();
     this.state = {
       text: '',
+      songsLoaded: false,
     };
   }
 
@@ -47,8 +48,14 @@ class App extends Component {
       .then(response => response.json())
       .then((data) => {
         console.log("Réponse reçue ! Voilà ce que j'ai reçu : ", data);
-      })
-    this.setState({ text: 'En avant la musique' });
+        return setTimeout(
+          function() {
+            this.setState({ songsLoaded: true, text: 'En avant la musique' });
+          }
+          .bind(this),
+          3000
+        );
+      });
   }
 
   render() {
@@ -59,7 +66,12 @@ class App extends Component {
           <h1 className="App-title">Blind Test</h1>
         </header>
         <div className="App-images">
-          <p>{this.state.text}</p>
+        {this.state.songsLoaded ?
+          (<p>{this.state.text}</p>) :
+          (<div>
+            <img src={loading} className="App-logo" alt="logo"/>
+           </div>
+          )}
         </div>
         <div className="App-buttons">
         </div>
