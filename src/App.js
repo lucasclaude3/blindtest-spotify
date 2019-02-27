@@ -6,6 +6,7 @@ import loading from './loading.svg';
 import './App.css';
 import Sound from 'react-sound';
 import Button from './Button';
+import AlbumCover from './AlbumCover';
 
 const apiToken = 'BQAirCk-YOujYYJANOInjEKuMjmMOVzTx3XGtkeemafbRwDydMzdvWjVExJufJhGCTzVrxlQW7PqqS2xWNuzSEBqUBEqGDOj_jzN9I2bw10V_wPoYlarkf4oyS9v4GF1iTPbGxJjkNiB2P1mSZw0sGa0dg';
 
@@ -35,6 +36,7 @@ class App extends Component {
     this.state = {
       text: '',
       songsLoaded: false,
+      data: null,
     };
   }
 
@@ -50,7 +52,7 @@ class App extends Component {
         console.log("Réponse reçue ! Voilà ce que j'ai reçu : ", data);
         return setTimeout(
           function() {
-            this.setState({ songsLoaded: true, text: 'En avant la musique' });
+            this.setState({ songsLoaded: true, text: 'En avant la musique', data: data });
           }
           .bind(this),
           3000
@@ -67,10 +69,15 @@ class App extends Component {
         </header>
         <div className="App-images">
         {this.state.songsLoaded ?
-          (<p>{this.state.text}</p>) :
+          (<div>
+            <p>{this.state.text}</p>
+            <p>{this.state.data.items.length} morceaux</p>
+            <p>Premier morceau : {this.state.data.items[0].track.name}</p>
+            <AlbumCover track={this.state.data.items[0].track} />
+          </div>) :
           (<div>
             <img src={loading} className="App-logo" alt="logo"/>
-           </div>
+          </div>
           )}
         </div>
         <div className="App-buttons">
